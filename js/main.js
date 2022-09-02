@@ -6,6 +6,8 @@ const gasto = document.querySelector(".gasto");
 let saldoFinal = 0;
 let receitaFinal = 0;
 let gastoFinal = 0;
+let teste = 0
+let id = 0
 transacoes = [];
 
 document.addEventListener("submit", (evento) => {
@@ -22,14 +24,13 @@ document.addEventListener("submit", (evento) => {
     valor.value = Number(valorCorreto)
   }  
 
-    const transacao = {
+  const transacao = {
+    "id": id++,
     "nome" : nome.value,
     "valor": valor.value
   }
 
   transacoes.push(transacao)
-
-  console.log(transacoes)
 
   criaElemento(nome, valor);
 
@@ -39,7 +40,7 @@ document.addEventListener("submit", (evento) => {
   valor.value = "";
 });
 
-function criaElemento(nome, valor) {
+function criaElemento(transacao) {
   const novoItem = document.createElement("div");
   novoItem.classList.add("transacao-container");
   historico.appendChild(novoItem);
@@ -61,20 +62,29 @@ function criaElemento(nome, valor) {
 
   const valorTransacao = document.createElement("p");
   valor.value > 0
-    ? (valorTransacao.innerHTML = "R$ " + valor.value)
-    : (valorTransacao.innerHTML = "- R$ " + -1 * valor.value);
+    ? (valorTransacao.innerHTML = "R$ " + 10)
+    : (valorTransacao.innerHTML = "- R$ " + -1 * transacao.valor);
   transacaoContainer.appendChild(valorTransacao);
+  console.log(transacoes[0])
+
+  // Adicionei o id ao objeto, mas ainda não consigo acessá-lo dentro da função
 
   // Deletar a transação do histórico -- faltou mudar os valores de saldos
   deletaImagem.addEventListener("click", () => {
+    
     novoItem.remove()
     if (document.querySelector(".transacao-container") == null) {
       document.querySelector("#placeholder-historico").innerHTML = "Não há transações";
     }
+    
   })
 }
 
 function atualizarSaldo(entrada) {
+  transacoes.map((elemento) => {
+    teste += Number(elemento.valor)
+  })
+  console.log(teste)
   saldoFinal += Number(entrada.value);
   saldo.innerHTML = `R$ ${saldoFinal}`;
 
