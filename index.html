@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Gastos</title>
+    <link rel="stylesheet" href="/controle-gastos/css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Controle de Gastos</h1>
+
+      <div class="saldo">
+        <p class="saldo-txt">Saldo Atual</p>
+        <p class="saldo-num">R$ 0</p>
+      </div>
+      <div class="ganho-gasto">
+        <div class="val-cont">
+          <h3>Receita</h3>
+          <p class="receita">R$ 0</p>
+        </div>
+        <div class="val-cont">
+          <h3>Despesas</h3>
+          <p class="gasto">R$ 0</p>
+        </div>
+      </div>
+      <br />
+
+      <h3>Histórico</h3>
+      <section id="historico">
+        <p id="placeholder-historico">Não há transações</p>
+      </section>
+
+      <br />
+      <h3>Adicionar Transação</h3>
+      <form>
+        <div class="campo-texto">
+          <label>Nome</label>
+          <input value="" type="text" placeholder="Digite o nome" id="nome" />
+        </div>
+
+        <div class="campo-texto">
+          <label>Valor</label>
+          <input
+            value=""
+            type="text"
+            placeholder="Digite o valor (- para gastos)"
+            id="valor"
+          />
+        </div>
+
+        <button class="botao">Adicionar Transação</button>
+      </form>
+
+      <footer class="footer-icons">
+        <a href="https://github.com/Yangerhardt" target="_blank">
+          <img src="imagens/github-icon.png" alt="GitHub icon" />
+        </a>
+      </footer>
+    </div>
+
+    <script src="/controle-gastos/js/main.js"></script>
+  </body>
+</html>
