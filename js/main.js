@@ -32,7 +32,7 @@ document.addEventListener("submit", (evento) => {
 
   transacoes.push(transacao);
 
-  criaElemento(nome, valor);
+  criaElemento(nome, valor, transacao);
 
   atualizarSaldo(valor);
 
@@ -40,7 +40,7 @@ document.addEventListener("submit", (evento) => {
   valor.value = "";
 });
 
-function criaElemento(nome, valor) {
+function criaElemento(nome, valor, transacao) {
   const novoItem = document.createElement("div");
   novoItem.classList.add("transacao-container");
   historico.appendChild(novoItem);
@@ -66,23 +66,27 @@ function criaElemento(nome, valor) {
     : (valorTransacao.innerHTML = "- R$ " + -1 * valor.value);
   transacaoContainer.appendChild(valorTransacao);
 
-
   // Deletar a transação do histórico -- faltou mudar os valores de saldos
   deletaImagem.addEventListener("click", () => {
-/*     novoItem.remove();
+    novoItem.remove();
     if (document.querySelector(".transacao-container") == null) {
       document.querySelector("#placeholder-historico").innerHTML =
         "Não há transações";
-    } */
-    transacoes.splice(transacoes[0].id, 1); // COMO PEGO A COORDENADA DE CADA OBJETO DENTRO DO ARRAY? COMO SEI QUAL É O ID DE CADA ELEMENTO?
-    console.log(transacoes);
-    console.log(id)
+    }
+    transacoes.forEach((elemento) => {
+      if (elemento === transacao) {
+        transacoes.splice(transacao.id, 1);
+      }
+    });
+    if (transacoes.length < 1) {
+      id = 0; // Resolve o problema de ID para os casos em que adiciono e removo todas as transações e depois volto a adicionar alguma e quero removê-la.
+    }
     atualizarSaldo(valor);
   });
 }
 
 function atualizarSaldo(entrada) {
-  saldoFinal = 0
+  saldoFinal = 0;
   transacoes.forEach((elemento) => {
     saldoFinal += Number(elemento.valor);
   });
@@ -90,9 +94,11 @@ function atualizarSaldo(entrada) {
 
 
   if (Number(entrada.value) > 0) {
+    receitaFinal = 0
     receitaFinal += Number(entrada.value);
     receita.innerHTML = `R$ ${receitaFinal}`;
   } else {
+    gastoFinal = 0
     gastoFinal += Number(entrada.value);
     gasto.innerHTML = `R$ ${gastoFinal}`;
   }
