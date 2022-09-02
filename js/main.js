@@ -6,8 +6,8 @@ const gasto = document.querySelector(".gasto");
 let saldoFinal = 0;
 let receitaFinal = 0;
 let gastoFinal = 0;
-let teste = 0
-let id = 0
+let teste = 0;
+let id = 0;
 transacoes = [];
 
 document.addEventListener("submit", (evento) => {
@@ -18,19 +18,19 @@ document.addEventListener("submit", (evento) => {
   const nome = document.querySelector("#nome");
   const valor = document.querySelector("#valor");
 
-  const valorStr = valor.value.toString()
+  const valorStr = valor.value.toString();
   if (valorStr.indexOf(",") > 0) {
-    const valorCorreto = valorStr.replace(",", ".")
-    valor.value = Number(valorCorreto)
-  }  
-
-  const transacao = {
-    "id": id++,
-    "nome" : nome.value,
-    "valor": valor.value
+    const valorCorreto = valorStr.replace(",", ".");
+    valor.value = Number(valorCorreto);
   }
 
-  transacoes.push(transacao)
+  const transacao = {
+    id: id++,
+    nome: nome.value,
+    valor: valor.value,
+  };
+
+  transacoes.push(transacao);
 
   criaElemento(nome, valor);
 
@@ -40,14 +40,14 @@ document.addEventListener("submit", (evento) => {
   valor.value = "";
 });
 
-function criaElemento(transacao) {
+function criaElemento(nome, valor) {
   const novoItem = document.createElement("div");
   novoItem.classList.add("transacao-container");
   historico.appendChild(novoItem);
 
   const deletaImagem = document.createElement("button");
-  deletaImagem.innerHTML = "x"
-  deletaImagem.classList.add("deleta-btn")
+  deletaImagem.innerHTML = "x";
+  deletaImagem.classList.add("deleta-btn");
   novoItem.appendChild(deletaImagem);
 
   const transacaoContainer = document.createElement("section");
@@ -62,31 +62,32 @@ function criaElemento(transacao) {
 
   const valorTransacao = document.createElement("p");
   valor.value > 0
-    ? (valorTransacao.innerHTML = "R$ " + 10)
-    : (valorTransacao.innerHTML = "- R$ " + -1 * transacao.valor);
+    ? (valorTransacao.innerHTML = "R$ " + valor.value)
+    : (valorTransacao.innerHTML = "- R$ " + -1 * valor.value);
   transacaoContainer.appendChild(valorTransacao);
-  console.log(transacoes[0])
 
-  // Adicionei o id ao objeto, mas ainda não consigo acessá-lo dentro da função
 
   // Deletar a transação do histórico -- faltou mudar os valores de saldos
   deletaImagem.addEventListener("click", () => {
-    
-    novoItem.remove()
+/*     novoItem.remove();
     if (document.querySelector(".transacao-container") == null) {
-      document.querySelector("#placeholder-historico").innerHTML = "Não há transações";
-    }
-    
-  })
+      document.querySelector("#placeholder-historico").innerHTML =
+        "Não há transações";
+    } */
+    transacoes.splice(transacoes[0].id, 1); // COMO PEGO A COORDENADA DE CADA OBJETO DENTRO DO ARRAY? COMO SEI QUAL É O ID DE CADA ELEMENTO?
+    console.log(transacoes);
+    console.log(id)
+    atualizarSaldo(valor);
+  });
 }
 
 function atualizarSaldo(entrada) {
-  transacoes.map((elemento) => {
-    teste += Number(elemento.valor)
-  })
-  console.log(teste)
-  saldoFinal += Number(entrada.value);
+  saldoFinal = 0
+  transacoes.forEach((elemento) => {
+    saldoFinal += Number(elemento.valor);
+  });
   saldo.innerHTML = `R$ ${saldoFinal}`;
+
 
   if (Number(entrada.value) > 0) {
     receitaFinal += Number(entrada.value);
