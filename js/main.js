@@ -92,14 +92,25 @@ function atualizarSaldo(entrada) {
   });
   saldo.innerHTML = `R$ ${saldoFinal}`;
 
+  console.log(Number(entrada.value))
 
-  if (Number(entrada.value) > 0) {
+  if (Number(entrada.value) > 0) { // ACHO QUE PRECISO FAZER UMA LÓGICA SÓ QUE FUNCIONE PARA ADICIONAR TANTO NO SALDO QUANTO NO GASTO, CASO SEJA POSITIVO OU NEGATIVO
     receitaFinal = 0
-    receitaFinal += Number(entrada.value);
-    receita.innerHTML = `R$ ${receitaFinal}`;
+    transacoes.forEach((elemento) => {
+      receitaFinal += Number(elemento.valor)
+      receita.innerHTML = `R$ ${receitaFinal}`
+    })
+
+/*     receitaFinal += Number(entrada.value);
+    receita.innerHTML = `R$ ${receitaFinal}`; */
   } else {
     gastoFinal = 0
-    gastoFinal += Number(entrada.value);
-    gasto.innerHTML = `R$ ${gastoFinal}`;
+    transacoes.forEach((elemento) => {
+      gastoFinal += Number(elemento.valor)
+      gasto.innerHTML = `R$ ${gastoFinal}`
+    })
+
+/*     gastoFinal += Number(entrada.value);
+    gasto.innerHTML = `R$ ${gastoFinal}`; */
   }
 }
