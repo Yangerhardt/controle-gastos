@@ -34,7 +34,7 @@ document.addEventListener("submit", (evento) => {
 
   criaElemento(nome, valor, transacao);
 
-  atualizarSaldo(valor);
+  atualizarSaldo(transacoes);
 
   nome.value = "";
   valor.value = "";
@@ -79,38 +79,25 @@ function criaElemento(nome, valor, transacao) {
       }
     });
     if (transacoes.length < 1) {
-      id = 0; // Resolve o problema de ID para os casos em que adiciono e removo todas as transações e depois volto a adicionar alguma e quero removê-la.
+      id = 0; 
     }
-    atualizarSaldo(valor);
+    atualizarSaldo(transacoes);
   });
 }
 
 function atualizarSaldo(entrada) {
   saldoFinal = 0;
-  transacoes.forEach((elemento) => {
+  receitaFinal = 0
+  gastoFinal = 0
+  entrada.forEach((elemento) => {
     saldoFinal += Number(elemento.valor);
+    if (elemento.valor > 0) {
+      receitaFinal += Number(elemento.valor)
+    } else if (elemento.valor < 0) {
+      gastoFinal += Number(elemento.valor)
+    } 
   });
   saldo.innerHTML = `R$ ${saldoFinal}`;
-
-  console.log(Number(entrada.value))
-
-  if (Number(entrada.value) > 0) { // ACHO QUE PRECISO FAZER UMA LÓGICA SÓ QUE FUNCIONE PARA ADICIONAR TANTO NO SALDO QUANTO NO GASTO, CASO SEJA POSITIVO OU NEGATIVO
-    receitaFinal = 0
-    transacoes.forEach((elemento) => {
-      receitaFinal += Number(elemento.valor)
-      receita.innerHTML = `R$ ${receitaFinal}`
-    })
-
-/*     receitaFinal += Number(entrada.value);
-    receita.innerHTML = `R$ ${receitaFinal}`; */
-  } else {
-    gastoFinal = 0
-    transacoes.forEach((elemento) => {
-      gastoFinal += Number(elemento.valor)
-      gasto.innerHTML = `R$ ${gastoFinal}`
-    })
-
-/*     gastoFinal += Number(entrada.value);
-    gasto.innerHTML = `R$ ${gastoFinal}`; */
+  receita.innerHTML = `R$ ${receitaFinal}`
+  gasto.innerHTML = `R$ ${gastoFinal}`
   }
-}
