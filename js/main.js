@@ -3,12 +3,13 @@ const historico = document.querySelector("#historico");
 const saldo = document.querySelector(".saldo-num");
 const receita = document.querySelector(".receita");
 const gasto = document.querySelector(".gasto");
-let saldoFinal = 0;
-let receitaFinal = 0;
-let gastoFinal = 0;
-let teste = 0;
 let id = 0;
-transacoes = [];
+let transacoes = JSON.parse(localStorage.getItem("itens")) || [];
+
+transacoes.forEach((transacao) => {
+  criaElemento(transacao.nome, transacao.valor, transacao);
+});
+atualizarSaldo(transacoes);
 
 document.addEventListener("submit", (evento) => {
   evento.preventDefault();
@@ -51,19 +52,20 @@ function criaElemento(nome, valor, transacao) {
   novoItem.appendChild(deletaImagem);
 
   const transacaoContainer = document.createElement("section");
-  Number(valor.value) > 0
+  Number(transacao.valor) > 0
     ? transacaoContainer.classList.add("transacao-pos")
     : transacaoContainer.classList.add("transacao-neg");
   novoItem.appendChild(transacaoContainer);
 
   const nomeTransacao = document.createElement("p");
-  nomeTransacao.innerHTML = nome.value;
+  nomeTransacao.innerHTML = transacao.nome;
   transacaoContainer.appendChild(nomeTransacao);
 
   const valorTransacao = document.createElement("p");
-  valor.value > 0
-    ? (valorTransacao.innerHTML = "R$ " + valor.value)
-    : (valorTransacao.innerHTML = "- R$ " + -1 * valor.value);
+
+  transacao.valor > 0
+    ? (valorTransacao.innerHTML = "R$ " + transacao.valor)
+    : (valorTransacao.innerHTML = "- R$ " + -1 * transacao.valor);
   transacaoContainer.appendChild(valorTransacao);
 
   // Deletar a transação do histórico -- faltou mudar os valores de saldos
@@ -79,25 +81,26 @@ function criaElemento(nome, valor, transacao) {
       }
     });
     if (transacoes.length < 1) {
-      id = 0; 
+      id = 0;
     }
     atualizarSaldo(transacoes);
   });
 }
 
 function atualizarSaldo(entrada) {
-  saldoFinal = 0;
-  receitaFinal = 0
-  gastoFinal = 0
+  let saldoFinal = 0;
+  let receitaFinal = 0;
+  let gastoFinal = 0;
   entrada.forEach((elemento) => {
     saldoFinal += Number(elemento.valor);
     if (elemento.valor > 0) {
-      receitaFinal += Number(elemento.valor)
+      receitaFinal += Number(elemento.valor);
     } else if (elemento.valor < 0) {
-      gastoFinal += Number(elemento.valor)
-    } 
+      gastoFinal += Number(elemento.valor);
+    }
   });
   saldo.innerHTML = `R$ ${saldoFinal}`;
-  receita.innerHTML = `R$ ${receitaFinal}`
-  gasto.innerHTML = `R$ ${gastoFinal}`
-  }
+  receita.innerHTML = `R$ ${receitaFinal}`;
+  gasto.innerHTML = `R$ ${gastoFinal}`;
+  localStorage.setItem("itens", JSON.stringify(transacoes));
+}
