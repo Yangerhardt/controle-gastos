@@ -1,8 +1,4 @@
-const botao = document.querySelector(".botao");
-const historico = document.querySelector("#historico");
-const saldo = document.querySelector(".saldo-num");
-const receita = document.querySelector(".receita");
-const gasto = document.querySelector(".gasto");
+const placeholderHistorico = document.querySelector("#placeholder-historico");
 let id = 0;
 let transacoes = JSON.parse(localStorage.getItem("itens")) || [];
 
@@ -11,10 +7,14 @@ transacoes.forEach((transacao) => {
 });
 atualizarSaldo(transacoes);
 
+if (transacoes.length == 0) {
+  placeholderHistorico.innerHTML = "Não há transações";
+}
+
 document.addEventListener("submit", (evento) => {
   evento.preventDefault();
 
-  document.querySelector("#placeholder-historico").innerHTML = "";
+  placeholderHistorico.innerHTML = "";
 
   const nome = document.querySelector("#nome");
   const valor = document.querySelector("#valor");
@@ -44,7 +44,7 @@ document.addEventListener("submit", (evento) => {
 function criaElemento(nome, valor, transacao) {
   const novoItem = document.createElement("div");
   novoItem.classList.add("transacao-container");
-  historico.appendChild(novoItem);
+  document.querySelector("#historico").appendChild(novoItem);
 
   const deletaImagem = document.createElement("button");
   deletaImagem.innerHTML = "x";
@@ -68,12 +68,10 @@ function criaElemento(nome, valor, transacao) {
     : (valorTransacao.innerHTML = "- R$ " + -1 * transacao.valor);
   transacaoContainer.appendChild(valorTransacao);
 
-  // Deletar a transação do histórico -- faltou mudar os valores de saldos
   deletaImagem.addEventListener("click", () => {
     novoItem.remove();
     if (document.querySelector(".transacao-container") == null) {
-      document.querySelector("#placeholder-historico").innerHTML =
-        "Não há transações";
+      placeholderHistorico.innerHTML = "Não há transações";
     }
     transacoes.forEach((elemento) => {
       if (elemento === transacao) {
@@ -99,8 +97,8 @@ function atualizarSaldo(entrada) {
       gastoFinal += Number(elemento.valor);
     }
   });
-  saldo.innerHTML = `R$ ${saldoFinal}`;
-  receita.innerHTML = `R$ ${receitaFinal}`;
-  gasto.innerHTML = `R$ ${gastoFinal}`;
+  document.querySelector(".saldo-num").innerHTML = `R$ ${saldoFinal}`;
+  document.querySelector(".receita").innerHTML = `R$ ${receitaFinal}`;
+  document.querySelector(".gasto").innerHTML = `R$ ${gastoFinal}`;
   localStorage.setItem("itens", JSON.stringify(transacoes));
 }
