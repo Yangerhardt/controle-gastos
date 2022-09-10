@@ -60,29 +60,33 @@ function criaElemento(nome, valor, transacao) {
   transacaoContainer.appendChild(nomeTransacao);
 
   const valorTransacao = document.createElement("p");
-  valorTransacao.classList.add("valor-transacao")
+  valorTransacao.classList.add("valor-transacao");
 
   transacao.valor > 0
     ? (valorTransacao.innerHTML = "R$ " + transacao.valor)
     : (valorTransacao.innerHTML = "- R$ " + -1 * transacao.valor);
   transacaoContainer.appendChild(valorTransacao);
 
+  removeTransacao(deletaImagem, novoItem, transacao);
+}
+
+function removeTransacao(deletaImagem, novoItem, transacao) {
   deletaImagem.addEventListener("click", () => {
     novoItem.remove();
     if (document.querySelector(".transacao-container") == null) {
       placeholderHistorico.innerHTML = "Não há transações";
     }
+    // Splice para retirar os elementos do array
     transacoes.forEach((elemento) => {
       if (elemento === transacao) {
-        transacoes.splice(transacao.id, 1);
-        if (document.querySelector(".transacao-container") == null && transacoes.length == 1) {
-          transacoes = []
-        }
+        transacoes.splice(transacao.id, 1)
       }
     });
-    if (transacoes.length < 1) {
-      id = 0;
-    }
+    // para resetar os id's de cada objeto do array
+    transacoes.forEach((elemento,index) => {
+      elemento.id = index
+    })
+
     atualizarSaldo(transacoes);
   });
 }
@@ -102,5 +106,5 @@ function atualizarSaldo(entrada) {
   document.querySelector(".saldo-num").innerHTML = `R$ ${saldoFinal}`;
   document.querySelector(".receita").innerHTML = `R$ ${receitaFinal}`;
   document.querySelector(".gasto").innerHTML = `R$ ${gastoFinal}`;
-  localStorage.setItem("itens", JSON.stringify(transacoes));
+  localStorage.setItem("itens", JSON.stringify(entrada));
 }
