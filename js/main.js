@@ -6,7 +6,6 @@ transacoes.forEach((transacao) => {
   criaElemento(transacao.nome, transacao.valor, transacao);
 });
 atualizarSaldo(transacoes);
-
 if (transacoes.length == 0) {
   placeholderHistorico.innerHTML = "Não há transações";
 }
@@ -32,7 +31,6 @@ document.addEventListener("submit", (evento) => {
   };
 
   transacoes.push(transacao);
-
   criaElemento(nome, valor, transacao);
 
   atualizarSaldo(transacoes);
@@ -62,6 +60,7 @@ function criaElemento(nome, valor, transacao) {
   transacaoContainer.appendChild(nomeTransacao);
 
   const valorTransacao = document.createElement("p");
+  valorTransacao.classList.add("valor-transacao")
 
   transacao.valor > 0
     ? (valorTransacao.innerHTML = "R$ " + transacao.valor)
@@ -76,6 +75,9 @@ function criaElemento(nome, valor, transacao) {
     transacoes.forEach((elemento) => {
       if (elemento === transacao) {
         transacoes.splice(transacao.id, 1);
+        if (document.querySelector(".transacao-container") == null && transacoes.length == 1) {
+          transacoes = []
+        }
       }
     });
     if (transacoes.length < 1) {

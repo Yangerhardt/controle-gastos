@@ -1,0 +1,19 @@
+@media (max-width: 670px) {
+  h1::after {
+    left: 10%;
+    width: 80%;
+  }
+  .ganho-gasto {
+    flex-direction: column;
+  }
+  .val-cont {
+    margin-top: 2px;
+  }
+  .transacao-container {
+    width: 90%;
+  }
+  .valor-transacao {
+    min-width: 60px;
+    margin-left: 10px;
+  }
+}
