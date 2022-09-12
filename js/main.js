@@ -18,25 +18,29 @@ document.addEventListener("submit", (evento) => {
   const nome = document.querySelector("#nome");
   const valor = document.querySelector("#valor");
 
-  const valorStr = valor.value.toString();
-  if (valorStr.indexOf(",") > 0) {
-    const valorCorreto = valorStr.replace(",", ".");
-    valor.value = Number(valorCorreto);
+  if (Number(valor.value) == NaN ) { //faltou validar quando não for inserido um valor
+    document.querySelector(".erro").innerHTML = "Valor inválido"
+  } else {
+      const valorStr = valor.value.toString();
+      if (valorStr.indexOf(",") > 0) {
+        const valorCorreto = valorStr.replace(",", ".");
+        valor.value = Number(valorCorreto);
+      }
+    
+      const transacao = {
+        id: id++,
+        nome: nome.value,
+        valor: valor.value,
+      };
+    
+      transacoes.push(transacao);
+      criaElemento(nome, valor, transacao);
+    
+      atualizarSaldo(transacoes);
+    
+      nome.value = "";
+      valor.value = "";
   }
-
-  const transacao = {
-    id: id++,
-    nome: nome.value,
-    valor: valor.value,
-  };
-
-  transacoes.push(transacao);
-  criaElemento(nome, valor, transacao);
-
-  atualizarSaldo(transacoes);
-
-  nome.value = "";
-  valor.value = "";
 });
 
 function criaElemento(nome, valor, transacao) {

@@ -3,7 +3,7 @@
   margin: 0 2%;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
   text-align: center;
-  background-color: #eee;
+  background-color: var(--backgroundColor);
   font-family: 'Roboto Mono', monospace;
 }
 
@@ -19,7 +19,7 @@ h1::after {
   content: "";
   position: absolute;
   height: 5px;
-  background-color: #1f3a52;
+  background-color: var(--corCentral);
   width: 100%;
   bottom: -5px;
   left: 0;
@@ -31,7 +31,7 @@ h1::after {
   font-size: 1.5em;
   font-weight: 500;
   margin-top: 10px;
-  color: #1F3A52;
+  color: var(--corCentral);
 }
 
 .saldo-txt {
@@ -39,7 +39,7 @@ h1::after {
   font-weight: 500;
   margin-bottom: 0;
   text-transform: uppercase;
-  color: #1F3A52;
+  color: var(--corCentral);
 }
 
 .ganho-gasto {
@@ -105,11 +105,11 @@ section .transacao-pos, section .transacao-neg {
 }
 
 section .transacao-pos {
-  border-right: 7px solid #41A186;
+  border-right: 7px solid var(--transacaoPositiva);
 }
 
 section .transacao-neg {
-  border-right: 7px solid #D7263D;
+  border-right: 7px solid var(--transacaoNegativa);
 }
 
 section .transacao:hover {
@@ -152,10 +152,14 @@ form h3 {
   outline: none;
 }
 
+.erro {
+  color: var(--transacaoNegativa);
+}
+
 .botao {
   border: none;
   margin: 40px;
-  background-color: #1F3A52;
+  background-color: var(--corCentral);
   color: #FFF;
   width: 330px;
   padding: 15px;
@@ -177,7 +181,7 @@ footer {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #1F3A52;
+  background-color: var(--corCentral);
   height: 100px;
   margin-top: 100px;
 }
