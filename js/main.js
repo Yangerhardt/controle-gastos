@@ -12,13 +12,14 @@ if (transacoes.length == 0) {
 
 document.addEventListener("submit", (evento) => {
   evento.preventDefault();
+  document.querySelector(".erro").innerHTML = ""
 
   placeholderHistorico.innerHTML = "";
 
   const nome = document.querySelector("#nome");
   const valor = document.querySelector("#valor");
 
-  if (Number(valor.value) == NaN ) { //faltou validar quando não for inserido um valor
+  if (valor.value.includes("a", "e", "i", "o", "u") || valor.value.trim() === "") {
     document.querySelector(".erro").innerHTML = "Valor inválido"
   } else {
       const valorStr = valor.value.toString();
