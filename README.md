@@ -1,4 +1,4 @@
-- Spending control
+# Spending control
 ![GitHub All Releases](https://img.shields.io/github/last-commit/Yangerhardt/controle-gastos?logo=GitHub)
 
 ![](https://github.com/Yangerhardt/controle-gastos/blob/main/Anima%C3%A7%C3%A3o.gif)
