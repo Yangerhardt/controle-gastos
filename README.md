@@ -3,7 +3,7 @@
 
 ![](https://github.com/Yangerhardt/controle-gastos/blob/main/Anima%C3%A7%C3%A3o.gif)
 
-Application desgined and built to control transactions. Built with Javascript, HTML and CSS. 
+Application desgined and built to control transactions. Built with Javascript, HTML and CSS. All data is stored in the local storage.
 
 - [Acess the page here](https://yangerhardt.github.io/controle-gastos/)
 
